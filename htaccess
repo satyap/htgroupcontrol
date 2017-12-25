@@ -1,0 +1,25 @@
+Options ExecCGI
+
+DirectoryIndex modgroup.pl
+SSLRequireSSL
+ErrorDocument 403 https://yourserver/accesscontrol/
+
+<Files modgroup.pl>
+AuthName "(MNA ID and Password)"
+AuthType Basic
+
+require valid-user
+</Files>
+
+<Files logout.html>
+AuthName "(MNA ID and Password)"
+AuthType Basic
+
+require user nosuchuserwehopethisisalogoutfunction
+</Files>
+
+<Files .htaccess>
+Deny from All
+</Files>
+
+

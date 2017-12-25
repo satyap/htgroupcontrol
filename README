@@ -1,0 +1,38 @@
+Access control mechanism
+
+This is a manager for Apache group files.
+
+Suppose you have a WebDAV directory tree rooted at $docs (see modutil.pl).
+Add an .htaccess file to restrict access. In this file, also add:
+
+AuthGroupFile /etc/accesscontrol/groupcontrol
+
+Put all the files from the distribution in some CGI-executable place and
+protect it with the included htaccess file (which you might have to rename from
+htaccess to .htaccess).
+
+Now edit modutil.pl and fix the file paths at the top. Watch out for the path
+to $file -- this should be same as AuthGroupFile above. The groupcontrol file,
+wherever you put it, must be writeable and readable by the web server.
+
+Add .htacess files to the sub-directories like so:
+
+<Limit MKCOL PUT DELETE LOCK UNLOCK COPY MOVE PROPPATCH POST OPTIONS PROPFIND>
+Require Group dirname_write
+</Limit>
+<Limit GET PROPFIND PROPPATCH>
+Require Group dirname_read
+</Limit>
+
+
+or, point your browser to moddir.pl, which creates directories and sets up the
+.htaccess for you.
+
+dirname is the name of the sub-directory. Instead of "Require Group (whatever)"
+you can also have "Require valid-user" to allow allow authenticated people
+access to the resource. See your web-server's documentation.
+
+This assumes WebDAV. If you have a plain directory tree, or something else,
+please see your web server documentation.
+
+

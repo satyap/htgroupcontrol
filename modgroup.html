@@ -1,0 +1,94 @@
+Content-type: text/html
+
+<html>
+    <head>
+        <title>Group control</title>
+    </head>
+    <body bgcolor="ffffff" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0">
+
+        <!-- TMPL_VAR NAME=MUSCBAR -->
+        <p/>
+        <table align="center" cellspacing="0" cellpadding="0" style="border: 1px solid; width: 770px;">
+            <tr><td colspan="3">
+                    (logo)
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 5px;">
+                    <h1>Group Control</h1>
+                </td>
+                <td style="">
+                    <form method="post" action="modgroup.pl">
+                        <input type="submit" name="" value="Refresh"/>
+                    </form>
+                </td>
+                <td style="">
+                    <form method="post" action="modgroup.pl">
+                        <input type="submit" name="logout" value="Logout"/>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+
+                <td style="padding: 5px;" colspan="3">
+                    <!-- TMPL_VAR NAME=MSG -->
+                    <!-- TMPL_UNLESS NAME=MSG -->
+                    <form method="post" action="modgroup.pl">
+                        <input type="submit" name="backup" value="Download a backup copy"/>
+                        (Use this to get a copy of your groups, which you can use with the restore
+                        option below to restore all your groups to.)
+                    </form>
+                    <hr/>
+                    <form method="post" action="modgroup.pl" enctype="multipart/form-data">
+                        <input type="submit" name="restore" value="Restore a backup copy"/>
+                        File:
+                        <input type="file" name="filename"/>
+                        Warning: This will restore to the point when you downloaded the backup file.
+                        All changes since then will be lost.
+                    </form>
+                    <hr/>
+
+                    <!-- TMPL_LOOP NAME=GROUPS -->
+                    <h2>Group: <!-- TMPL_VAR NAME=GROUP --></h2>
+                    <form method="post" action="modgroup.pl"><p>
+                        <input type="hidden" name="modgroupgroupname" value="<!-- TMPL_VAR NAME=GROUP -->"/>
+                        <table>
+                            <tr><td></td>
+                                <!-- TMPL_LOOP NAME=USERS -->
+                                <!-- TMPL_IF NAME=__ODD__ -->
+                                </tr><tr>
+                                <!-- /TMPL_IF -->
+                                <td>
+                                    <input type="checkbox" name="<!-- TMPL_VAR NAME=USER -->" value="<!-- TMPL_VAR NAME=USER -->" /> 
+                                    <!-- TMPL_VAR NAME=USER -->
+                                </td>
+                                <!-- TMPL_IF NAME=__LAST__ -->
+                            </tr>
+                            <tr>
+                                <td>
+                                    ^ Select to delete
+                                </td>
+                            </tr>
+                            <!-- /TMPL_IF -->
+                            <!-- /TMPL_LOOP -->
+                        </table>
+
+                        </p>
+                        <p>
+                        Add new username:
+                        <input type="text" name="modgroupnewname" value=""/>
+                        </p>
+                        <input type="submit" value="Save"/>
+                    </form>
+
+
+                    <!-- /TMPL_LOOP -->
+
+                    <!-- /TMPL_UNLESS -->
+
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+

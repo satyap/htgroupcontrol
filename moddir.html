@@ -1,0 +1,96 @@
+Content-type: text/html
+
+<html>
+    <head>
+        <title>Group control &mdash; create directory</title>
+    </head>
+    <body bgcolor="ffffff" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0">
+
+        <p/>
+        <table align="center" cellspacing="0" cellpadding="0" style="border: 1px solid; width: 770px;">
+            <tr><td colspan="3">
+                    (logo)
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 5px;">
+                    <h1>Group Control &mdash; Make new directory</h1>
+                </td>
+                <td style="">
+                    <form method="post" action="moddir.pl">
+                        <input type="submit" name="" value="Refresh"
+                        <!-- TMPL_IF NAME=MSG -->
+                        style="background-color: #00ff00;"
+                        <!--/TMPL_IF -->
+                        />
+                    </form>
+                </td>
+                <td style="">
+                    <form method="post" action="moddir.pl">
+                        <input type="submit" name="logout" value="Logout"/>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+
+                <td style="padding: 5px;" colspan="3">
+                    <!-- TMPL_VAR NAME=MSG -->
+                    <!-- TMPL_UNLESS NAME=MSG -->
+                    <table border="1" cellpadding="5" cellspacing="0">
+                        <!-- TMPL_LOOP NAME=DIRS -->       
+                        <tr>
+                            <td><!-- TMPL_VAR NAME=DIR --></td>
+                            <td>
+                                <form style="display: inline">
+                                    <input type="hidden" name="dirmod" value="<!-- TMPL_VAR NAME=DIR -->" />
+                                    <input type="submit" name="restr" value="Restricted access"/>
+                                </form>
+                                </td><td>
+                                <form style="display: inline">
+                                    <input type="hidden" name="dirmod" value="<!-- TMPL_VAR NAME=DIR -->" />
+                                    <input type="submit" name="valid" value="All valid users have access"/>
+                                </form>
+                            </td>
+                        </tr>
+
+                        <!-- /TMPL_LOOP -->
+                    </table>
+
+                    <p/>
+                    
+                    <form method="post" action="moddir.pl">
+                        New directory: 
+                        <input type="text" name="newdir" value=""/>
+                        <br/>
+                        <input type="submit" value="Create new directory"/>
+                    (Letters and numbers only, please. Anything else will be removed.)
+                    </form>
+
+                    <div>
+                        <p> Restricted access: Access control list will be set
+                        up. Users listed in directoryname_read will have read
+                        access, users in directoryname_write will have write
+                        access. Users in directoryname_admin will have admin
+                        access, which means they can modify the user lists.
+                        This is the default setting. </p>
+                        <p>
+                        All valid users have access: This means that any user
+                        who has a valid account can have read access. Write and
+                        admin access work as in "restricted access".
+                        </p>
+                         <p>
+                        New directories start with no one in access control
+                        lists, and only the creator of the directory in the
+                        admin list. New directories are set to restricted
+                        access.
+                        </p>
+                    </div>
+                    
+                    <!-- /TMPL_UNLESS -->
+
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+
